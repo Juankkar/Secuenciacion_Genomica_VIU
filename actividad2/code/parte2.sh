@@ -76,7 +76,6 @@ echo ""
 ## Actualizamos amrfinder
 amrfinder --update
 
-## Y utilizamos el comando
-amrfinder --organism Pseudomonas_aeruginosa -n ../data/processed/ensamblaje/prokka_pseudomonas/PROKKA_01302023.ffn -c 0.8 -i 0.9 --plus --log ../data/processed/ensamblaje/prokka_pseudomonas/amrfinder.log > ../data/processed/ensamblaje/prokka_pseudomonas/AMRFinder_out.csv 
-
+## Y utilizamos el comando para  crear un csv en el que podemos ver las bacterias que generan resistencia antibióticos
+amrfinder --organism Pseudomonas_aeruginosa -n ../data/processed/ensamblaje/prokka_pseudomonas/PROKKA_02032023.ffn -c 0.8 -i 0.9 --plus --log ../data/processed/ensamblaje/prokka_pseudomonas/amrfinder.log > ../data/processed/ensamblaje/prokka_pseudomonas/AMRfinder_out.csv
 

@@ -1,0 +1,50 @@
+
+##########################################
+#        CALIDAD DE LAS SECUENCIAS       #
+##########################################
+
+Analysis complete for S15_L001_R1_001.fastq.gz
+Analysis complete for S15_L001_R2_001.fastq.gz
+
+##########################################
+#                LIMPIEZA                #
+##########################################
+
+Analysis complete for out1.clean.fq.gz
+Analysis complete for out2.clean.fq.gz
+
+##########################################
+#                  MAPEO                 #
+##########################################
+
+
+##########################################
+#    PASAR DE FORMATO .sam A .BAM        #
+##########################################
+
+3467462 + 0 in total (QC-passed reads + QC-failed reads)
+1939490 + 0 primary
+1510640 + 0 secondary
+17332 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+2035393 + 0 mapped (58.70% : N/A)
+507421 + 0 primary mapped (26.16% : N/A)
+1939490 + 0 paired in sequencing
+969745 + 0 read1
+969745 + 0 read2
+459850 + 0 properly paired (23.71% : N/A)
+485096 + 0 with itself and mate mapped
+22325 + 0 singletons (1.15% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+
+################################
+#     ELIMINAR DUPLICADOS      #
+################################
+
+
+##################################
+## EXTRACCIÓN DE VARIANTES .VCF ##
+##################################
+

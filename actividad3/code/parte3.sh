@@ -24,7 +24,7 @@ echo "## LIMPIEZA ##"
 echo "##############"
 echo ""
 
-fastp -i ../data/raw/sample1.R1.fastq.gz -I ../data/raw/sample1.R2.fastq.gz -o out1.fastq.gz -O out2.fastq.gz --detect_adapter_for_pe --cut_tail 25 --cut_front 25 --cut_mean_quality 25 --html out.fastp.html
+fastp -i ../data/raw/sample1.R1.fastq.gz -I ../data/raw/sample1.R2.fastq.gz -o out1.fastq.gz -O out2.fastq.gz --detect_adapter_for_pe --cut_tail 25 --cut_front 25 --cut_mean_quality 25 -l 100 --html out.fastp.html
 
 mv *fastp* out*  ../data/processed/Fastp_results
 ## Realizamos un fastqc de las lecturas limpias
@@ -78,22 +78,23 @@ bwa mem -Y -M -R '@RG\tID:\tSM:.' -t 2 ../data/processed/map_results/GCF_0098588
 bwa index ../data/processed/map_results/sample1.sort.bam
 
 ## Eliminamos los primers para que no interfieran en la determinación de las variantes
-ivar trim -i ../data/processed/map_results/sample1.sort.bam -p sample1.trim -m 30 -q 20 -s 4 -b ../data/raw/nCoV-2019_v4.primer.bed
-
+ivar trim -i ../data/processed/map_results/sample1.sort.bam -p ../data/processed/map_results/sample1.trim -m 30 -q 20 -s 4 -b ../data/raw/nCoV-2019_v4.primer.bed 
+mv core.* ../data/processed/map_results
 ## Orden e indexado de los archivos de salida
-samtools sort ../data/processed/map_results/sample1.trim.bam -o ../data/processed/map_results/sample1.trim.sort.bam
 
-samtools index ../data/processed/map_results/sample1.trim.sort.bam
+samtools sort ../data/processed/map_results/sample1.trim.bam -o ../data/processed/map_results/sample1.trim.sort.bam 
+
+samtools index ../data/processed/map_results/sample1.trim.sort.bam 
 
 ## Llamada de variants con iVar
 samtools mpileup -A -d 0 --reference ../data/processed/map_results/GCF_009858895.2_ASM985889v3_genomic.fna -B -Q 0 ../data/processed/map_results/sample1.trim.sort.bam | ivar variants -p sample1.ivar
 
 ## Extraemos la secuencia consenso con ivar
-samtools mpileup --a -A -d 0 -B -Q 0 sample1.trim.sort.bam | ivar consensus -p sample1.ivar -q 20 -t 0.8 -m 30 -n N
+samtools mpileup --a -A -d 0 -B -Q 0 ../data/processed/map_results/sample1.trim.sort.bam | ivar consensus -p ../data/processed/map_results/sample1.ivar -q 20 -t 0.8 -m 30 -n N
 
 mv *ivar* ../data/processed/map_results
 
 ## Determinar el linaje
 # Actualizamos primero
 pangolin --update
-pangolin ../data/processed/map_results/sample1.ivar.fa -o ../data/processed/map_results/sample1.pangolin --outfile ../data/processed/map_results/sample1.csv -t 2 --max-ambig 0.3
+pangolin ../data/processed/map_results/sample1.ivar.fa -o ../data/processed/map_results/sample1.pangolin --outfile sample1.csv --max-ambig 0.3
