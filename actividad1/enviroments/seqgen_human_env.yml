@@ -1,4 +1,4 @@
-name: seqgen_humano2
+name: 04MBIF_humano
 channels:
   - conda-forge
   - bioconda

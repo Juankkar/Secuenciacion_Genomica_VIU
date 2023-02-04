@@ -3,14 +3,11 @@
 rm ../data/processed/README.txt
 
 ## Creamos los directorios que vamos a usar
-mkdir ../data/processed/FastQC_raw_reads
-mkdir ../data/processed/Fastp_results
+mkdir ../data/processed/FastQC_raw_reads  
+mkdir ../data/processed/Fastp_results 
 mkdir ../data/processed/map_results
 
 
-###############################
-## CALIDAD DE LAS SECUENCIAS ##
-###############################
 echo ""
 echo "##########################################"
 echo "#        CALIDAD DE LAS SECUENCIAS       #"
@@ -22,9 +19,6 @@ fastqc ../data/raw/*.gz
 ## Movemos las lecturas html a una carpeta en concreto
 mv ../data/raw/*fastqc* ../data/processed/FastQC_raw_reads
 
-##############
-## LIMPIEZA ##
-##############
 echo ""
 echo "##########################################"
 echo "#                LIMPIEZA                #"
@@ -38,9 +32,6 @@ mv *.json  *clean* fastp.html ../data/processed/Fastp_results/
 
 fastqc ../data/processed/Fastp_results/*.gz
 
-###########
-## MAPEO ##
-###########
 echo ""
 echo "##########################################"
 echo "#                  MAPEO                 #"
@@ -56,9 +47,6 @@ bwa mem -a ../data/raw/Homo_sapiens.GRCh37.dna.chromosome.16.fa ../data/processe
 
 mv chr16.sam chr16.out ../data/raw/*.fa.* ../data/processed/map_results
 
-##################################
-## PASAR DE FORMATO .sam A .BAM ##
-##################################
 echo ""
 echo "##########################################"
 echo "#    PASAR DE FORMATO .sam A .BAM        #"
@@ -72,11 +60,8 @@ samtools sort ../data/processed/map_results/chr16.bam > ../data/processed/map_re
 ## Indexamos el archivo
 samtools index ../data/processed/map_results/chr16_sorted.bam
 ## Y Observamos unas estadísticas básicas del archivo
-samtools flagstats ../data/processed/map_results/chr16_sorted.bam
+samtools flagstats ../data/processed/map_results/chr16_sorted.bam > ../data/processed/map_results/chr16_sorted_flagstats.txt
 
-#########################
-## ELIMINAR DUPLICADOS ##
-#########################
 echo ""
 echo "################################"
 echo "#     ELIMINAR DUPLICADOS      #"
@@ -93,9 +78,6 @@ picard AddOrReplaceReadGroups -I ../data/processed/map_results/chr16_dedup.bam -
 samtools index ../data/processed/map_results/chr16_dedup_RG.bam
 
 mv markDuplicatesMetrics.txt ../data/processed/map_results/
-##################################
-## EXTRACCIÓN DE VARIANTES .VCF ##
-##################################
 echo ""
 echo "##################################"
 echo "## EXTRACCIÓN DE VARIANTES .VCF ##"

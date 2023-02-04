@@ -1,4 +1,4 @@
-name: seqgen_covid
+name: 04MBIF_bacteriano
 channels:
   - conda-forge
   - bioconda
